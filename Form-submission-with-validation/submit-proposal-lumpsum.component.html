@@ -1,0 +1,497 @@
+<main class="comon_main internal_pages_prnt  submit-perposal-page">
+    <div class="cmn-pading-top cl-dash" style="margin-top: 80px!important">
+        <section class="client_post_job talent-profile cmn-pading-top">
+            <div class="container">
+                <br>
+                <ngx-spinner size="medium" template="<img src='assets/images/Loader6a.gif' />" [type]="typeSelected">
+                </ngx-spinner>
+                <!-- Start : Submit proposal Lumpsum form -->
+                <form [formGroup]="submitProposalLumpsum" (ngSubmit)="onSubmit()"
+                    onkeydown="return event.key != 'Enter';">
+                    <!--Start: Submit Proposal Block-->
+                    <div class="noti-wrap job-dt-wrap">
+                        <h2 class="job-title promot">
+                            Submit a Proposal
+                        </h2>
+                        <div class="talent-wrap-1">
+                            <div class="d-flex">
+                                <img src="assets/imgs/submit-icon.svg" class="mr-3"> Accept an interview for this job by
+                                replying and promoting terms. After you click submit, this invitation to interview will
+                                become an active interview. You will discuss
+                                the job and the client will decide whether to hire you
+                            </div>
+                        </div>
+                    </div>
+                    <!--End: Submit Proposal Block-->
+
+                    <!--Start: Cover Letter Block-->
+                    <div class="noti-wrap job-dt-wrap pd-bottom-0">
+                        <h2 class="job-title promot d-flex justify-content-between str-title">
+                            <span class="position-relative" style="top:4px">Proposal for Structural Services</span>
+                            <img src="assets/imgs/Constal.png" style="width: 132px; height: fit-content;" />
+                        </h2>
+                        <div class="form-group mb-2">
+                            <h3 class="sub-title mb-3 promot">Cover Letter (Message to the client) <span
+                                    class="astrick">*</span></h3>
+                            <textarea formControlName="coverLetter"
+                                [ngClass]="{ 'is-invalid': submitted && f.coverLetter.errors }" cols="30" rows="5"
+                                maxlength="300" class="form-control" placeholder="Write your message here..."
+                                (input)="textareaspace($event,'cover')" (keydown.enter)="$event.stopPropagation()"
+                                [(ngModel)]="cover_letter_text"></textarea>
+                            <span class="msg_text">{{cover_letter_text.length}}/300</span>
+                            <div *ngIf="submitted && f.coverLetter.errors" class="invalid-feedback">
+                                <div *ngIf="f.coverLetter.errors.required">Cover Letter is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End: Cover Letter Block-->
+
+                    <!--Start: Technical Offer Block-->
+                    <div class="noti-wrap job-dt-wrap pd-bottom-0">
+                        <h2 class="job-title promot d-flex">
+                            Technical Offer
+                        </h2>
+                        <div class="form-group mb-1">
+                            <label class="font-16">Scope of Work<span class="astrick">*</span></label>
+                            <textarea cols="30" rows="5" maxlength="1000" formControlName="scopWork"
+                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.scopWork.errors }"
+                                placeholder="Write the description here..." (input)="textareaspace($event,'scope')"
+                                (keydown.enter)="$event.stopPropagation()" [(ngModel)]="Scope_of_Work_text"></textarea>
+                            <span class="msg_text">{{Scope_of_Work_text.length}}/1000</span>
+                            <div *ngIf="submitted && f.scopWork.errors" class="invalid-feedback">
+                                <div *ngIf="f.scopWork.errors.
+							required">Scope of Work is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-1">
+                            <label class="font-16">Methodologies <span class="astrick">*</span></label>
+                            <textarea cols="30" rows="5" maxlength="1000" formControlName="methodology"
+                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.methodology.errors }"
+                                placeholder="How are you planning this project Success?"
+                                (input)="textareaspace($event,'methodologies')"
+                                (keydown.enter)="$event.stopPropagation()" [(ngModel)]="Methodologies_text"></textarea>
+                            <span class="msg_text">{{Methodologies_text.length}}/1000</span>
+                            <div *ngIf="submitted && f.methodology.errors" class="invalid-feedback">
+                                <div *ngIf="f.methodology.errors.required">Methodologies are required</div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label class="font-16">Tools & Technologies<span class="astrick">*</span></label>
+                            <div class="position-relative tools-and-tech-widget">
+                                <div class="input-group proposal_tool_technology mb-0">
+                                    <div class="input-group-prepend" *ngFor='let toolsdata of toolsquery;let i=index;'>
+                                        <span class="input-group-text">{{toolsdata}}&nbsp;<a href="javascript:void(0)"
+                                                (click)="deletetoolsdata(i)">X</a></span>
+                                    </div>
+                                    <div class="row">
+                                        <input type="text"
+                                            style="border: none !important; border-radius:0px!important;margin-left: 15px;width: 385px;"
+                                            ngxTypeahead formControlName="tools" class="form-control tool_border"
+                                            placeholder="Start typing to search for tools & technologies..."
+                                            [taList]="staticList" [taItemTpl]="itemTpl" [taAllowEmpty]=true
+                                            (taSelected)="handleStaticResultSelected($event)"
+                                            (keyup.enter)="clear($event)" (change)="onChange($event)" onkeypress="if (event.which === 32 &&  event.target.selectionStart === 0) {
+										return false;
+									  }  " #searchtools />
+                                        <ng-template #itemTpl let-result>
+                                            <div style="width: 340px!important;">
+                                                <div>
+                                                    <div>
+                                                        <div style="padding: 0px!important;">
+                                                            <p class="font-14 font-weight-500 mb-0 title">{{
+                                                                result.result }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                    <img src="assets/imgs/search.svg" class="search-btn position-absolute" />
+                                </div>
+                                <div *ngIf="submitted && this.toolsquery.length == 0" class="invalid-feedback">
+                                    <div *ngIf="this.toolsquery.length == 0">Tools & Technologies are required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-1">
+                            <label class="font-16 d-flex align-items-baseline">Related work and References <img
+                                    src="assets/imgs/recommended-icon.svg" class="ml-3" /></label>
+                            <textarea cols="30" rows="5" formControlName="relatedWork" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.relatedWork.errors }"
+                                (input)="textareaspace($event,'relatedWork')" placeholder="Select Experience"
+                                (keydown.enter)="$event.stopPropagation()" maxlength="500"
+                                [(ngModel)]="Related_work_and_References_text"></textarea>
+                            <span class="msg_text">{{Related_work_and_References_text.length}}/500</span>
+
+                            <div *ngIf="submitted && f.relatedWork.errors" class="invalid-feedback">
+                                <div *ngIf="f.relatedWork.errors">Related work and References is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label class="font-16 text-blue">Attachments</label>
+                            <div class="file-upload d-flex align-items-center justify-content-center font-16"
+                                style="margin-bottom: 0.5rem;">
+                                <div>
+                                    <label class="custom-file-upload">
+                                        <input type="file" formControlName="files" id="files" multiple
+                                            class="form-control" (change)="onFileChange($event)" accept=".pdf" />
+                                        Upload
+                                    </label>
+                                    <span *ngIf="this.files.length > 0">{{this.files.length}} Files Uploaded</span>
+                                    <span *ngIf="this.files.length == 0">
+                                        Related Work & References files (File must be less than 20 MB)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback" *ngIf="this.fileSizeError === true">File size to large. Please
+                                file upload valid size.</div>
+                            <div *ngIf="this.files.length>0">
+                                <span class="applied-filter-block" *ngFor="let previewItem of this.files; let i=index;">
+                                    <span class="filter-badge ng-star-inserted" style="border: 1px solid;"><span
+                                            class="ng-star-inserted">{{previewItem.name}}</span>
+                                        <a href="javascript:void(0)" (click)="deleteFilePreviewRow(i)">X</a>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End: Technical Offer Block-->
+
+                    <!--Start: Financial Offer Block-->
+                    <div class="noti-wrap job-dt-wrap pd-bottom-0">
+                        <div class="job-title d-flex justify-content-between mt-2">
+                            <h2 class="promot">
+                                Financial Offer
+                            </h2>
+                            <h3 class="promot sub-title mb-0 text-blue">
+                                Client’s Budget: $150.00 USD
+                            </h3>
+                        </div>
+                        <div class="form-group">
+                            <h3 class="sub-title mb-3 promot">How do you want to be paid?</h3>
+                            <div class="mat-rd">
+                                <mat-radio-group [(ngModel)]="selectedStatus" formControlName="applyproposalType"
+                                    aria-label="Select an option" class="d-block">
+                                    <div class="d-flex position-relative mb-3">
+                                        <mat-radio-button value="milestone" class="mr-2 position-relative"
+                                            style="top:18px" selected="true" [checked]="radioBtnDefault">
+                                        </mat-radio-button>
+                                        <div>
+                                            <span class="text-black d-flex align-items-baseline mb-2">By milestone <img
+                                                    src="assets/imgs/recommended-icon.svg" class="ml-3" /></span>
+                                            <span class="d-block">Divide the project into smaller segments, called
+                                                milestones. You'll be paid for milestones as they are completed and
+                                                approved.</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex mb-3">
+                                        <mat-radio-button value="project" class="mr-2" checked="!checked">
+                                        </mat-radio-button>
+                                        <div>
+                                            <span class="text-black d-block mb-2">By project </span>
+                                            <span class="d-block">Get your entire payment at the end, when all work has
+                                                been delivered.</span>
+                                        </div>
+                                    </div>
+                                </mat-radio-group>
+                            </div>
+                            <div *ngIf="selectedStatus == 'milestone'" class="pl-2" id="byMilestores"
+                                formArrayName="Rows">
+                                <h3 class="promot sub-title">
+                                    Project Milestones
+                                </h3>
+                                <p class="text-black">Add project milestones and pay in installments as each milestone
+                                    is completed to your satisfaction</p>
+                                <div class="row"
+                                    *ngFor="let itemrow of submitProposalLumpsum.get('Rows')['controls']; let i=index;let l=last"
+                                    [formGroupName]="i">
+                                    <div class="col-md-5">
+                                        <div class="form-group ml-5 position-relative">
+                                            <label class="font-16">Description <span class="astrick">*</span> </label>
+                                            <input type="text" class="form-control" placeholder="Select Experience"
+                                                formControlName="discreption" (keypress)="letterOnly($event)" />
+                                            <div *ngIf="submitted" class="invalid-feedback">
+                                                <div *ngIf="itemrow.controls.discreption.invalid">
+                                                    Description is required
+                                                </div>
+                                            </div>
+                                            <span class="text-black position-absolute"
+                                                style="left: -35px; top:42px">{{i+1}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="font-16">Due date <span class="astrick">*</span> </label>
+                                            <div class="date-pick form-control" id="date-pick">
+                                                <mat-form-field>
+                                                    <input matInput [min]="min1Date" [matDatepicker]="picker"
+                                                        value="11-04-2021" formControlName="dueDate" readonly>
+                                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <div *ngIf="submitted" class="invalid-feedback">
+                                                <div *ngIf="itemrow.controls.dueDate.invalid">
+                                                    Due date is required
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="font-16">Amount <span class="astrick">*</span> </label>
+                                            <div class="position-relative amount-widget">
+                                                <input type="number" class="form-control amount-input"
+                                                    placeholder="0.00" formControlName="ammount"
+                                                    (keyup)="getAmountMilestone(i)" min="0"
+                                                    oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+                                                    onkeypress="if (this.value.length > 4) return false;" />
+                                                <span class="position-absolute feedback-txt">USD</span>
+                                                <div *ngIf="submitted" class="invalid-feedback">
+                                                    <div *ngIf="itemrow.controls.ammount.invalid">
+                                                        Ammount is required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-1" style="text-align:center;top:42px" *ngIf="formArr > 1">
+                                        <a (click)="deleteRow(i)"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </div>
+                                <div class="text-right" *ngIf="addnewRowCount">
+                                    <a class="add-more" (click)="addNewRow()">
+                                        <i class="fal fa-plus-circle mr-1"></i> Add new Milestone
+                                    </a>
+                                </div>
+                                <hr />
+                                <div class="row mt-4">
+                                    <div class="col-lg-5 text-center">
+                                        <img src="assets/imgs/shield-img.svg" />
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h3 class="promot sub-title">Bid</h3>
+                                                <p class="text-black">Total amount the client will see on your proposal
+                                                </p>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="text-black text-center">${{this.totalServiceFee |
+                                                    number:'1.2' }}</div>
+                                                <input type="hidden" id="totalServiceFee"
+                                                    value="{{this.totalServiceFee}}">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h3 class="promot sub-title mb-0">10% CONSTAL Service Fee
+
+                                                </h3>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="text-black text-center">${{this.constalService |
+                                                    number:'1.2'}}</div>
+                                                <input type="hidden" id="constalService"
+                                                    value="{{this.constalService}}">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h3 class="promot sub-title">You'll Receive</h3>
+                                                <p class="text-black  mb-0">Your estimated payment, after service fees.
+                                                </p>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="text-black text-center">${{this.estimateServiceFee |
+                                                    number:'1.2'}}</div>
+                                                <input type="hidden" id="estimateServiceFee"
+                                                    value="{{this.estimateServiceFee}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="selectedStatus == 'project'" class="pl-2" id="byProduct">
+                                <h3 class="promot sub-title">
+                                    What is the full amount you'd like to bid for this job?
+                                </h3>
+                                <div class="row mt-4">
+                                    <div class="col-lg-8">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-md-6">
+                                                <h3 class="promot sub-title">Bid <span class="astrick">*</span></h3>
+                                                <p class="text-black">Total amount the client will see on your proposal
+                                                </p>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="position-relative amount-widget active">
+                                                    <input type="number" class="form-control amount-input"
+                                                        placeholder="0.00" formControlName="bid" id="bid"
+                                                        value="{{this.projectBidAmount }}" min="0"
+                                                        (keyup)="getBidAmount($event.target.value)"
+                                                        oninput="this.value = parseInt(this.value)"
+                                                        onkeypress="if (this.value.length > 4) return false;"
+                                                        step="0.01" />
+                                                    <span class="position-absolute feedback-txt">USD</span>
+                                                    <div *ngIf="submitted && f.bid.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.bid.errors.required">Bid is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-md-6">
+                                                <h3 class="promot sub-title mb-0">10% CONSTAL Service Fee </h3>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="position-relative amount-widget active">
+                                                    <input type="text" class="form-control amount-input"
+                                                        placeholder="0.00" id="projectserviceFee"
+                                                        value="{{this.constalServiceFee}}" readonly />
+                                                    <span class="position-absolute feedback-txt">USD</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-md-6">
+                                                <h3 class="promot sub-title">You'll Receive</h3>
+                                                <p class="text-black  mb-0">The estimated amount you'll receive after
+                                                    service fees</p>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="position-relative amount-widget active">
+                                                    <input type="number" class="form-control amount-input"
+                                                        placeholder="0.00" id="receiveAmount"
+                                                        value="{{this.estimateEarnFee}}" min="0"
+                                                        (input)="getReciveAmount($event.target.value)"
+                                                        onkeypress="if (this.value.length > 4) return false;"
+                                                        oninput="this.value = parseInt(this.value)" />
+                                                    <span class="position-absolute feedback-txt">USD</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 text-center">
+                                        <img src="assets/imgs/shield-img.svg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End: Financial Offer Block-->
+
+                    <!--Start: Schedule Block-->
+                    <div class="noti-wrap job-dt-wrap pd-bottom-0">
+                        <h2 class="job-title promot">Schedule</h2>
+                        <div class="schedule-block" style="max-width: 100%;">
+                            <div class="row mb-3 d-flex justify-content-between">
+                                <div class="col-lg-4">
+                                    <label class="text-black font-16">Expected Project Start Date <span
+                                            class="astrick">*</span>
+                                    </label>
+                                    <div class="date-pick form-control singleline" id="date-pick">
+                                        <mat-form-field>
+                                            <input matInput [matDatepicker]="picker1" [min]="min1Date"
+                                                value="11-04-2021" formControlName="expectStartdate"
+                                                [ngClass]="{ 'is-invalid': submitted && f.expectStartdate.errors }"
+                                                readonly />
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div *ngIf="submitted && f.expectStartdate.errors" class="invalid-feedback">
+                                        <div *ngIf="f.expectStartdate.errors.required"
+                                            style="font-weight: 900;font-size: 10px;">Project Start Date is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <label class="text-black font-16" style="font-size: 15px !important;">How long will
+                                        this project take? <span class="astrick">*</span></label>
+                                    <select (change)="getDurationdata($event.target.value)"
+                                        formControlName="expectCompletiondate" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.expectCompletiondate.errors }">
+                                        <option value="" selected disabled>Duration</option>
+                                        <option>More than 6 Months</option>
+                                        <option>3 to 6 Months</option>
+                                        <option>1 to 3 Months</option>
+                                        <option>Less than 1 Month</option>
+                                        <option>Other</option>
+                                    </select>
+                                    <div *ngIf="submitted && f.expectCompletiondate.errors" class="invalid-feedback">
+                                        <div *ngIf="f.expectCompletiondate.errors.required" style="font-weight: 900;
+									font-size: 10px;">Project Completion Date is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3" *ngIf="this.showDayduration==true">
+                                    <label class="text-black font-16">&nbsp;</label>
+                                    <div class="d-flex justify-content-between" style="border-bottom: 1px solid #666;">
+                                        <input type="number" min="0" id="nos" class="form-control singleline" value="1"
+                                            style="width:80px; border: 0!important;" />
+                                        <select id="typeOfstatus" class="form-control" style="width:135px;">
+                                            <option>Day(s)</option>
+                                            <option>Month(s)</option>
+                                            <option>Year(s)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-2">
+                            <textarea formControlName="scheduleMessage" name="" id="" cols="30" rows="5"
+                                class="form-control" placeholder="Add Note here"
+                                (input)="textareaspace($event,'scedulemessage')"
+                                (keydown.enter)="$event.stopPropagation()"></textarea>
+                        </div>
+                    </div>
+                    <!--End: Schedule Block-->
+
+                    <!--Start: Terms Block-->
+                    <div class="noti-wrap job-dt-wrap">
+                        <h2 class="job-title promot">Terms & Conditions <span class="astrick">*</span></h2>
+                        <div class="sub-expension-inner sub-expension-one sub-expension-inner-ml-21 checkblock">
+                            <mat-checkbox formControlName="termsAndconditions" value="1" class="mr-2 font-16">I agree to
+                                the <a class="green-link">Terms and Conditions</a> provided by CONSTAL.</mat-checkbox>
+                            <div *ngIf="submitted && f.termsAndconditions.errors" class="invalid-feedback">
+                                <div *ngIf="f.termsAndconditions.errors.required" style="font-weight: 900;
+									font-size: 10px;">Terms & Conditions is required</div>
+                            </div>
+                        </div>
+                        <div class="sub-expension-inner sub-expension-one sub-expension-inner-ml-21 checkblock">
+                            <mat-checkbox formControlName="termsAndconditions" value="1" class="mr-2 font-16">I agree to
+                                the <a class="green-link">Non-Disclosure Agreement</a> provided by CONSTAL.
+                            </mat-checkbox>
+                            <div *ngIf="submitted && f.termsAndconditions.errors" class="invalid-feedback">
+                                <div *ngIf="f.termsAndconditions.errors.required" style="font-weight: 900;
+									font-size: 10px;">Terms & Conditions is required</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="font-16">E-Sign</label>
+                                <textarea name="" id="" cols="30" rows="5" class="form-control"
+                                    placeholder="Signature to have a name and date"
+                                    (input)="textareaspace($event,'esign')"
+                                    (keydown.enter)="$event.stopPropagation()"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--End: Terms Block-->
+                    <div class="px-4 py-4  justify-content-between text-right">
+                        <button class="btn-theme-2 bg-green">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+                <!-- End : Submit proposal Lumpsum form -->
+            </div>
+        </section>
+    </div>
+</main>
